@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Docker
         run: docker-compose up -d
@@ -27,7 +27,7 @@ jobs:
           jmeter -g jmeter-scripts/results/result.jtl -o jmeter-scripts/results/report
 
       - name: Upload HTML Report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: jmeter-report
           path: jmeter-scripts/results/report
