@@ -1,0 +1,33 @@
+name: Run JMeter Performance Tests
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  jmeter:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Docker
+        run: docker-compose up -d
+
+      - name: Run JMeter test
+        run: |
+          chmod +x ./run-specific-jmeter-script.sh
+          ./run-specific-jmeter-script.sh jmeter-scripts/test_plan.jmx
+
+      - name: Generate HTML Report
+        run: |
+          mkdir -p jmeter-scripts/results/report
+          jmeter -g jmeter-scripts/results/result.jtl -o jmeter-scripts/results/report
+
+      - name: Upload HTML Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: jmeter-report
+          path: jmeter-scripts/results/report
