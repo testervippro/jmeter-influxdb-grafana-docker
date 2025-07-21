@@ -1,9 +1,12 @@
 version: '3.5'
 services:
+# user :Heath93
+# password: "admin"
   influxdb:
     image: influxdb:1.8.10
+    # Same http://host_to_change:8086/write?db=jmeter in backend listener
     ports:
-     - "8086:8086"
+     - "8086:8086" 
      - 25826:25826/udp
     networks:
      - grafana-influxdb-network
