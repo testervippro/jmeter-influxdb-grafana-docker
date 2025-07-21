@@ -5,19 +5,6 @@ This container setup allows you to instantly sync **JMeter** results with **Infl
 
 ---
 
-## 🛢️ InfluxDB
-
-![InfluxDB](docs/images/InfuxDB.png)
-
----
-
-## 📈 Grafana Dashboard
-
-Open: [http://localhost:3000/dashboards](http://localhost:3000/dashboards)
-
-![Grafana Dashboard](docs/images/Grafana.png)
-
----
 
 ## ✅ Prerequisites
 
@@ -46,7 +33,7 @@ docker-compose up -d
 
 ## 🔧 Adjust JMeter Script
 
-Define the following **2 variables** in the **Test Plan component** of your JMeter script:
+Define the following **2 variables** in the **Test Plan component** of your JMeter script:(Just an example of where you can set variables — the current .jmx script already has them defined.)
 
 | Name            | Value                              |
 | --------------- | ---------------------------------- |
@@ -57,7 +44,7 @@ Define the following **2 variables** in the **Test Plan component** of your JMet
 
 ---
 
-### ➕ Add & Configure Backend Listener in JMeter
+### ➕ Add & Configure Backend Listener in JMeter (Just an example of where you can set variables — the current .jmx script already has them defined.)
 
 ![JMeter Backend Listener](docs/images/BackendListener.png)
 
@@ -107,6 +94,21 @@ http://localhost:8086/write?db=jmeter_results
 ```bash
 .\run-specific-jmeter-script.ps1 example.jmx
 ```
+
+
+## 📈 Grafana Dashboard
+
+Open: [http://localhost:3000/dashboards](http://localhost:3000/dashboards) 
+Then click "JMeter Dashboard"
+
+![Grafana Dashboard](docs/images/Grafana.png)
+
+## 🛢️ InfluxDB
+
+![InfluxDB](docs/images/InfuxDB.png)
+
+---
+
 
 ---
 
