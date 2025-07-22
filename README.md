@@ -1,75 +1,10 @@
 
-# 📊 JMeter + InfluxDB + Grafana Docker Container
+# 🧪 JMeter + InfluxDB + Grafana Integration Guide
 
-This container setup allows you to instantly sync **JMeter** results with **InfluxDB** and visualize test results in **Grafana** in real time.
+## ⚙️ Backend Listener Configuration (JMeter)
 
----
-
-
-## ✅ Prerequisites
-
-Ensure the following tools are installed on your machine:
-
-* Docker
-* Docker Compose
-
----
-
-## 🏗️ Build JMeter Docker Image
-
-```bash
-docker build -t jmeter jmeter-docker
-```
-
----
-
-## ▶️ Start InfluxDB and Grafana
-
-```bash
-docker-compose up -d
-```
-
----
-
-## 🔧 Adjust JMeter Script
-
-Define the following **2 variables** in the **Test Plan component** of your JMeter script:(Just an example of where you can set variables — the current .jmx script already has them defined.)
-
-| Name            | Value                              |
-| --------------- | ---------------------------------- |
-| `CLIENTNAME`    | `Example`                          |
-| `STARTDATETIME` | `${__time(yy-MM-dd-HH:mm:ss:SSS)}` |
-
-![JMeter Variables](<Jmeter varibale.png>)
-
----
-
-### ➕ Add & Configure Backend Listener in JMeter (Just an example of where you can set variables — the current .jmx script already has them defined.)
-
-![JMeter Backend Listener](docs/images/BackendListener.png)
-
-#### Explanation:
-
-```properties
-${__P(INFLUXDB_HOST, localhost)}
-```
-
-* Uses the value of `INFLUXDB_HOST` **if provided** when launching JMeter.
-* Defaults to `localhost` otherwise.
-
-**Resulting URL:**
-
-```
-http://localhost:8086/write?db=jmeter_results
-```
-
----
-
-## ⚙️ Backend Listener Configuration Parameters
-
-| Name                    | Value                                                                  |
-| ----------------------- | ---------------------------------------------------------------------- |
-| `influxdbMetricsSender` | `org.apache.jmeter.visualizers.backend.influxdb.HttpMetricsSender`     |
+| Parameter                | Value                                                                 |
+|--------------------------|-----------------------------------------------------------------------|
 | `influxdbUrl`           | `http://${__P(INFLUXDB_HOST, localhost)}:8086/write?db=jmeter_results` |
 | `application`           | `${CLIENTNAME}_${STARTDATETIME}`                                       |
 | `measurement`           | `jmeter`                                                               |
@@ -85,30 +20,38 @@ http://localhost:8086/write?db=jmeter_results
 
 ```bash
 ./run-specific-jmeter-script.sh example.jmx
-```
+````
 
 ---
 
 ## 🪟 Run JMeter Script on Windows
 
-```bash
+```powershell
 .\run-specific-jmeter-script.ps1 example.jmx
 ```
 
+---
 
 ## 📈 Grafana Dashboard
 
-Open: [http://localhost:3000/dashboards](http://localhost:3000/dashboards) 
-Then click "JMeter Dashboard"
+Open: [http://localhost:3000/dashboards](http://localhost:3000/dashboards)
+Then click **"JMeter Dashboard"**
 
 ![Grafana Dashboard](docs/images/Grafana.png)
+
+---
+
+### 🔗 Import Dashboard Mẫu (ID: 5496)
+
+1. Menu trái → `+` → **Import**
+2. Nhập Dashboard ID: `5496` → **Load**
+3. Chọn đúng Data Source bạn đã tạo → **Import**
+
+---
 
 ## 🛢️ InfluxDB
 
 ![InfluxDB](docs/images/InfuxDB.png)
-
----
-
 
 ---
 
@@ -117,13 +60,14 @@ Then click "JMeter Dashboard"
 ```bash
 jmeter -g jmeter-scripts/results/result.jtl -o jmeter-scripts/results/report
 ```
-![alt text](<Basic Report.png>)
+
+![Basic HTML Report](Basic%20Report.png)
 
 ---
 
 ## 🎛️ Filter the Correct Test Run in Grafana
 
-It is the **concatenation** of:
+Filter theo format:
 
 ```
 CLIENTNAME + STARTDATETIME
@@ -131,20 +75,6 @@ CLIENTNAME + STARTDATETIME
 
 ![Grafana Filter](docs/images/Grafana_filter.png)
 
----
 
-## 📚 Disclaimer
 
-> Inspired by: [BlazeMeter blog - Make Use of Docker with JMeter](https://www.blazemeter.com/blog/make-use-of-docker-with-jmeter-learn-how)
 
----
-
-## 💖 Support This Project
-
-If you find this project helpful and want to support further development, please consider [supporting](https://testwithroy.com/b/support) it.
-
-> Thank you for your support!
-
----
-
-Let me know if you want to include YAML for `docker-compose.yml` or `taurus.yml` as well!
