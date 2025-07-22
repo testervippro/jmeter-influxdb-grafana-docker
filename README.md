@@ -49,6 +49,16 @@ Then click **"JMeter Dashboard"**
 
 ---
 
+### Set Auto-Refresh Interval to easy monitor
+At the top-right of your Grafana dashboard:
+
+Click the refresh icon (🔁)
+
+Set the Auto-refresh interval, for example:
+
+5s – every 5 seconds
+
+
 ## 🛢️ InfluxDB
 
 ![InfluxDB](docs/images/InfuxDB.png)
